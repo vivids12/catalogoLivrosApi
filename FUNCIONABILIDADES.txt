@@ -1,0 +1,20 @@
+FUNCIONABILIDADES API
+LIVRO
+ - cadastro #
+ - listar por autor
+ - listar por genero
+ - livro por id
+ - livro por nome
+EDITORA
+ - cadastro #
+ - editora por id
+ - editora por nome
+AUTOR
+ - cadastro #
+ - autor por id
+ - autor por nome
+
+VALIDACOES
+SEGURANÇA
+TESTES
+DOCUMENTAÇÃO
