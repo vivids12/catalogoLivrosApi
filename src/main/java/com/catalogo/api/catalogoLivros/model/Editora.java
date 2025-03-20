@@ -4,7 +4,7 @@ import com.catalogo.api.catalogoLivros.dto.CadastroEditoraDto;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "editoras")
+@Table
 public class Editora {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -4,7 +4,6 @@ import com.catalogo.api.catalogoLivros.dto.CadastroEditoraDto;
 import com.catalogo.api.catalogoLivros.exception.ValidacaoException;
 import com.catalogo.api.catalogoLivros.model.Editora;
 import com.catalogo.api.catalogoLivros.repository.EditoraRepository;
-import com.sun.jdi.connect.VMStartException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

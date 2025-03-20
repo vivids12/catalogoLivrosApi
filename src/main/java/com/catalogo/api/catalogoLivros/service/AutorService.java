@@ -15,7 +15,7 @@ public class AutorService {
 
     public void cadastrar(CadastroAutorDto dto){
         Boolean cpfJaCadastrado = repository.existsByCpf(dto.cpf());
-        Boolean emailETelefoneJaCadastrado = repository.exitsByEmailOrTelefone(dto.email(), dto.telefone());
+        Boolean emailETelefoneJaCadastrado = repository.existsByEmailOrTelefone(dto.email(), dto.telefone());
 
         if(cpfJaCadastrado){
             throw new ValidacaoException("CPF já cadastrado.");

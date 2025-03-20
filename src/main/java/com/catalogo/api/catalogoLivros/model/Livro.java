@@ -4,7 +4,7 @@ import com.catalogo.api.catalogoLivros.dto.CadastroLivroDto;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "livros")
+@Table
 public class Livro {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

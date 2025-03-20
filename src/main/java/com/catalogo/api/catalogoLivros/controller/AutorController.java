@@ -2,8 +2,6 @@ package com.catalogo.api.catalogoLivros.controller;
 
 import com.catalogo.api.catalogoLivros.dto.CadastroAutorDto;
 import com.catalogo.api.catalogoLivros.exception.ValidacaoException;
-import com.catalogo.api.catalogoLivros.model.Autor;
-import com.catalogo.api.catalogoLivros.repository.AutorRepository;
 import com.catalogo.api.catalogoLivros.service.AutorService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;

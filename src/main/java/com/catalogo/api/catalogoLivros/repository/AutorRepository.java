@@ -9,5 +9,5 @@ public interface AutorRepository extends JpaRepository<Autor, Long> {
 
     Boolean existsByCpf(String cpf);
 
-    Boolean exitsByEmailOrTelefone(String email, String telefone);
+    Boolean existsByEmailOrTelefone(String email, String telefone);
 }
