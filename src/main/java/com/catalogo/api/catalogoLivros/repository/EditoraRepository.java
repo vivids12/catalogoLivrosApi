@@ -4,4 +4,7 @@ import com.catalogo.api.catalogoLivros.model.Editora;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface EditoraRepository extends JpaRepository<Editora, Long> {
+    Boolean existsByCnpj(String cnpj);
+
+    Boolean existsByEmail(String email);
 }
