@@ -21,9 +21,29 @@ public class Autor {
     public Autor() {}
 
     public Autor(CadastroAutorDto dto) {
-        this.nome = dto.nome();
-        this.email = dto.email();
+        this.nome = dto.nome().toLowerCase();
+        this.email = dto.email().toLowerCase();
         this.telefone = dto.telefone();
         this.cpf = dto.cpf();
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getTelefone() {
+        return telefone;
+    }
+
+    public String getCpf() {
+        return cpf;
     }
 }

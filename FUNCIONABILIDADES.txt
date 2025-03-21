@@ -1,8 +1,10 @@
 FUNCIONABILIDADES API
 LIVRO
  - cadastro #
- - listar por autor
- - listar por genero
+ - listar por autor #
+   - não precisar ser o nome exato
+ - listar por genero #
+ - listar por editora #
  - livro por id
  - livro por nome
 EDITORA

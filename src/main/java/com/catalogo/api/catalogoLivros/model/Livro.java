@@ -29,4 +29,24 @@ public class Livro {
         this.editora = editora;
         this.genero = dto.genero();
     }
+
+    public Long getId() {
+        return id;
+    }
+
+    public String getTitulo() {
+        return titulo;
+    }
+
+    public Autor getAutor() {
+        return autor;
+    }
+
+    public Editora getEditora() {
+        return editora;
+    }
+
+    public Genero getGenero() {
+        return genero;
+    }
 }

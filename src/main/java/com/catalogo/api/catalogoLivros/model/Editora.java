@@ -19,8 +19,24 @@ public class Editora {
     public Editora() {}
 
     public Editora(CadastroEditoraDto dto) {
-        this.nome = dto.nome();
-        this.email = dto.email();
+        this.nome = dto.nome().toLowerCase();
+        this.email = dto.email().toLowerCase();
         this.cnpj = dto.cnpj();
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getCnpj() {
+        return cnpj;
     }
 }
