@@ -1,6 +1,6 @@
 package com.catalogo.api.catalogoLivros.validacoes.livro;
 
-import com.catalogo.api.catalogoLivros.dto.CadastroLivroDto;
+import com.catalogo.api.catalogoLivros.dto.livro.CadastroLivroDto;
 import com.catalogo.api.catalogoLivros.exception.ValidacaoException;
 import com.catalogo.api.catalogoLivros.repository.EditoraRepository;
 import org.springframework.beans.factory.annotation.Autowired;

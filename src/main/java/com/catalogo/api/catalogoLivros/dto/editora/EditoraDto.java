@@ -1,4 +1,4 @@
-package com.catalogo.api.catalogoLivros.dto;
+package com.catalogo.api.catalogoLivros.dto.editora;
 
 import com.catalogo.api.catalogoLivros.model.Editora;
 

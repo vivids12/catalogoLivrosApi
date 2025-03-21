@@ -1,4 +1,4 @@
-package com.catalogo.api.catalogoLivros.dto;
+package com.catalogo.api.catalogoLivros.dto.autor;
 
 import com.catalogo.api.catalogoLivros.model.Autor;
 

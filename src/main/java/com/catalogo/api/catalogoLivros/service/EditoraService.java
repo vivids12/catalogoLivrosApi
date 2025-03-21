@@ -1,9 +1,7 @@
 package com.catalogo.api.catalogoLivros.service;
 
-import com.catalogo.api.catalogoLivros.dto.CadastroEditoraDto;
-import com.catalogo.api.catalogoLivros.dto.EditoraDto;
-import com.catalogo.api.catalogoLivros.dto.LivroDto;
-import com.catalogo.api.catalogoLivros.exception.ValidacaoException;
+import com.catalogo.api.catalogoLivros.dto.editora.CadastroEditoraDto;
+import com.catalogo.api.catalogoLivros.dto.editora.EditoraDto;
 import com.catalogo.api.catalogoLivros.model.Editora;
 import com.catalogo.api.catalogoLivros.repository.EditoraRepository;
 import com.catalogo.api.catalogoLivros.validacoes.editora.ValidacoesCadastroEditora;

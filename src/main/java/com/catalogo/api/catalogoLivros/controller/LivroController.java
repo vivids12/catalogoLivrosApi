@@ -1,8 +1,8 @@
 package com.catalogo.api.catalogoLivros.controller;
 
-import com.catalogo.api.catalogoLivros.dto.AtualizarLivroDto;
-import com.catalogo.api.catalogoLivros.dto.CadastroLivroDto;
-import com.catalogo.api.catalogoLivros.dto.LivroDto;
+import com.catalogo.api.catalogoLivros.dto.livro.AtualizarLivroDto;
+import com.catalogo.api.catalogoLivros.dto.livro.CadastroLivroDto;
+import com.catalogo.api.catalogoLivros.dto.livro.LivroDto;
 import com.catalogo.api.catalogoLivros.exception.ValidacaoException;
 import com.catalogo.api.catalogoLivros.model.Editora;
 import com.catalogo.api.catalogoLivros.model.Genero;

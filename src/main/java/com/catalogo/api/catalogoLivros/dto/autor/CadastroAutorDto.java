@@ -1,16 +1,17 @@
-package com.catalogo.api.catalogoLivros.dto;
+package com.catalogo.api.catalogoLivros.dto.autor;
 
-import jakarta.persistence.Entity;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 
-public record CadastroEditoraDto(
+public record CadastroAutorDto(
         @NotBlank
         String nome,
         @NotBlank
         @Email
         String email,
         @NotBlank
-        String cnpj
+        String telefone,
+        @NotBlank
+        String cpf
 ) {
 }

@@ -1,10 +1,11 @@
 package com.catalogo.api.catalogoLivros.controller;
 
-import com.catalogo.api.catalogoLivros.dto.*;
+import com.catalogo.api.catalogoLivros.dto.editora.AtualizarEditoraDto;
+import com.catalogo.api.catalogoLivros.dto.editora.CadastroEditoraDto;
+import com.catalogo.api.catalogoLivros.dto.editora.EditoraDto;
 import com.catalogo.api.catalogoLivros.exception.ValidacaoException;
 import com.catalogo.api.catalogoLivros.repository.EditoraRepository;
 import com.catalogo.api.catalogoLivros.service.EditoraService;
-import com.catalogo.api.catalogoLivros.service.LivroService;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;

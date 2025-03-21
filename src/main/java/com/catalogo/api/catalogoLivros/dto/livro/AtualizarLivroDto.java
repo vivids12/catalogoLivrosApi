@@ -1,4 +1,4 @@
-package com.catalogo.api.catalogoLivros.dto;
+package com.catalogo.api.catalogoLivros.dto.livro;
 
 import jakarta.validation.constraints.NotNull;
 

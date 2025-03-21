@@ -1,6 +1,8 @@
 package com.catalogo.api.catalogoLivros.controller;
 
-import com.catalogo.api.catalogoLivros.dto.*;
+import com.catalogo.api.catalogoLivros.dto.autor.AtualizarAutorDto;
+import com.catalogo.api.catalogoLivros.dto.autor.AutorDto;
+import com.catalogo.api.catalogoLivros.dto.autor.CadastroAutorDto;
 import com.catalogo.api.catalogoLivros.exception.ValidacaoException;
 import com.catalogo.api.catalogoLivros.repository.AutorRepository;
 import com.catalogo.api.catalogoLivros.service.AutorService;

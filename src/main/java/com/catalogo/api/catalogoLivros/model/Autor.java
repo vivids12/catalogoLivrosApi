@@ -1,7 +1,7 @@
 package com.catalogo.api.catalogoLivros.model;
 
-import com.catalogo.api.catalogoLivros.dto.AtualizarAutorDto;
-import com.catalogo.api.catalogoLivros.dto.CadastroAutorDto;
+import com.catalogo.api.catalogoLivros.dto.autor.AtualizarAutorDto;
+import com.catalogo.api.catalogoLivros.dto.autor.CadastroAutorDto;
 import jakarta.persistence.*;
 
 @Entity

@@ -1,6 +1,5 @@
-package com.catalogo.api.catalogoLivros.dto;
+package com.catalogo.api.catalogoLivros.dto.livro;
 
-import com.catalogo.api.catalogoLivros.model.Editora;
 import com.catalogo.api.catalogoLivros.model.Genero;
 import jakarta.validation.constraints.NotBlank;
 
