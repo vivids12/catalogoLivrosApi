@@ -1,5 +1,6 @@
 package com.catalogo.api.catalogoLivros.repository;
 
+import com.catalogo.api.catalogoLivros.dto.livro.LivroDto;
 import com.catalogo.api.catalogoLivros.model.Genero;
 import com.catalogo.api.catalogoLivros.model.Livro;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -18,4 +19,6 @@ public interface LivroRepository extends JpaRepository<Livro, Long> {
     List<Livro> findByTituloAndStatusTrue(String titulo);
 
     List<Livro> findByStatusTrue();
+
+    LivroDto getReferenceByIdAndStatusTrue(Long id);
 }

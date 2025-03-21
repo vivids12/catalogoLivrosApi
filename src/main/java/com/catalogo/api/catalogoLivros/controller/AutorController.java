@@ -48,13 +48,12 @@ public class AutorController {
 
     @GetMapping("/{id}")
     public ResponseEntity<?> listarPorId(@PathVariable Long id){
-        AutorDto autor = service.listarPorId(id);
-
-        if(autor == null){
-            return ResponseEntity.notFound().build();
+        try {
+            AutorDto autor = service.listarPorId(id);
+            return ResponseEntity.ok(autor);
+        } catch (ValidacaoException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
-
-        return ResponseEntity.ok(autor);
     }
 
     @GetMapping("/nome/{nome}")

@@ -99,13 +99,9 @@ public class LivroController {
 
     @GetMapping("/{id}")
     public ResponseEntity<?> listarPorId(@PathVariable Long id){
-        List<LivroDto> livros = service.listarPorId(id);
+        LivroDto livro = service.listarPorId(id);
 
-        if(livros.isEmpty()){
-            return ResponseEntity.notFound().build();
-        }
-
-        return ResponseEntity.ok(livros);
+        return ResponseEntity.ok(livro);
     }
 
     @GetMapping

@@ -2,6 +2,7 @@ package com.catalogo.api.catalogoLivros.service;
 
 import com.catalogo.api.catalogoLivros.dto.livro.CadastroLivroDto;
 import com.catalogo.api.catalogoLivros.dto.livro.LivroDto;
+import com.catalogo.api.catalogoLivros.exception.ValidacaoException;
 import com.catalogo.api.catalogoLivros.model.Autor;
 import com.catalogo.api.catalogoLivros.model.Editora;
 import com.catalogo.api.catalogoLivros.model.Genero;
@@ -95,13 +96,13 @@ public class LivroService {
         return livros;
     }
 
-    public List<LivroDto> listarPorId(Long id) {
-        List<LivroDto> livros = repository.findById(id)
-                .stream()
-                .map(LivroDto::new)
-                .toList();
-
-        return livros;
+    public LivroDto listarPorId(Long id) {
+        try {
+            LivroDto livro = repository.getReferenceByIdAndStatusTrue(id);
+            return livro;
+        } catch (ValidacaoException e){
+            throw new ValidacaoException("Id inválido!");
+        }
     }
 
     public List<LivroDto> listarLivros() {

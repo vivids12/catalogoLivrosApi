@@ -49,13 +49,12 @@ public class EditoraController {
 
     @GetMapping("/{id}")
     public ResponseEntity<?> listarPorId(@PathVariable Long id){
-        List<EditoraDto> editoras = service.listarPorId(id);
-
-        if(editoras.isEmpty()){
-            return ResponseEntity.notFound().build();
+        try {
+            EditoraDto editora = service.listarPorId(id);
+            return ResponseEntity.ok(editora);
+        } catch (ValidacaoException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
-
-        return ResponseEntity.ok(editoras);
     }
 
     @GetMapping("/nome/{nome}")
