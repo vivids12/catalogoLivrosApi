@@ -1,6 +1,8 @@
 package com.catalogo.api.catalogoLivros.service;
 
 import com.catalogo.api.catalogoLivros.dto.CadastroEditoraDto;
+import com.catalogo.api.catalogoLivros.dto.EditoraDto;
+import com.catalogo.api.catalogoLivros.dto.LivroDto;
 import com.catalogo.api.catalogoLivros.exception.ValidacaoException;
 import com.catalogo.api.catalogoLivros.model.Editora;
 import com.catalogo.api.catalogoLivros.repository.EditoraRepository;
@@ -22,5 +24,30 @@ public class EditoraService {
         validacoes.forEach(validacao -> validacao.validar(dto));
 
         repository.save(new Editora(dto));
+    }
+
+    public List<EditoraDto> listarEditoras() {
+        List<EditoraDto> editoras = repository.findAllAndStatusTrue()
+                .stream()
+                .map(EditoraDto::new)
+                .toList();
+        return editoras;
+    }
+
+    public List<EditoraDto> listarPorId(Long id) {
+        List<EditoraDto> editoras = repository.findByIdAndStatusTrue(id)
+                .stream()
+                .map(EditoraDto::new)
+                .toList();
+        return editoras;
+    }
+
+    public List<EditoraDto> listarPorNome(String nome) {
+        List<EditoraDto> editoras = repository.findByNomeAndStatusTrue(nome)
+                .stream()
+                .map(EditoraDto::new)
+                .toList();
+
+        return editoras;
     }
 }

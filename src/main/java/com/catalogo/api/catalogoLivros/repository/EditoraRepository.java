@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.util.Arrays;
 import java.util.List;
 
 public interface EditoraRepository extends JpaRepository<Editora, Long> {
@@ -14,4 +15,10 @@ public interface EditoraRepository extends JpaRepository<Editora, Long> {
 
     @Query("SELECT e.id FROM Editora e WHERE e.nome = :nome")
     List<Long> getIdsByNome(@Param("nome") String editora);
+
+    List<Editora> findAllAndStatusTrue();
+
+    List<Editora> findByIdAndStatusTrue(Long id);
+
+    List<Editora> findByNomeAndStatusTrue(String nome);
 }

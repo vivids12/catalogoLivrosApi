@@ -96,7 +96,7 @@ public class LivroController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> listarPorNome(@PathVariable Long id){
+    public ResponseEntity<?> listarPorId(@PathVariable Long id){
         List<LivroDto> livros = service.listarPorId(id);
 
         if(livros.isEmpty()){
@@ -129,7 +129,7 @@ public class LivroController {
 
     @DeleteMapping("/{id}")
     @Transactional
-    public ResponseEntity<String> atualizar(@PathVariable Long id) {
+    public ResponseEntity<String> excluir(@PathVariable Long id) {
         var livro = repository.getById(id);
         livro.excluir();
         return ResponseEntity.noContent().build();

@@ -16,6 +16,8 @@ public class Editora {
 
     private String cnpj;
 
+    private Boolean status;
+
     public Editora() {}
 
     public Editora(CadastroEditoraDto dto) {
@@ -36,7 +38,20 @@ public class Editora {
         return email;
     }
 
+    public Boolean getStatus() {
+        return status;
+    }
+
     public String getCnpj() {
         return cnpj;
+    }
+
+    public void atualizarInformacoes(Editora editora) {
+        this.nome = editora.nome;
+        this.email = editora.email;
+    }
+
+    public void excluir() {
+        this.status = false;
     }
 }
