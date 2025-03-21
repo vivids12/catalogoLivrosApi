@@ -30,6 +30,11 @@ public class Autor {
         this.cpf = dto.cpf();
     }
 
+    public Autor(Long id, String nome) {
+        this.id = id;
+        this.nome = nome;
+    }
+
     public Long getId() {
         return id;
     }

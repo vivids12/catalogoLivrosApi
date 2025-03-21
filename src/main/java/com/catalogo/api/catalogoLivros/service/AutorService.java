@@ -2,6 +2,7 @@ package com.catalogo.api.catalogoLivros.service;
 
 import com.catalogo.api.catalogoLivros.dto.autor.AutorDto;
 import com.catalogo.api.catalogoLivros.dto.autor.CadastroAutorDto;
+import com.catalogo.api.catalogoLivros.exception.ValidacaoException;
 import com.catalogo.api.catalogoLivros.model.Autor;
 import com.catalogo.api.catalogoLivros.repository.AutorRepository;
 import com.catalogo.api.catalogoLivros.validacoes.autor.ValidacoesCadastroAutor;
@@ -32,12 +33,13 @@ public class AutorService {
         return autores;
     }
 
-    public List<AutorDto> listarPorId(Long id) {
-        List<AutorDto> autores = repository.findByIdAndStatusTrue(id)
-                .stream()
-                .map(AutorDto::new)
-                .toList();
-        return autores;
+    public AutorDto listarPorId(Long id) {
+        try {
+            AutorDto autor = repository.getReferenceByIdAndStatusTrue(id);
+            return autor;
+        } catch (ValidacaoException e) {
+            throw new ValidacaoException("Id inválido!");
+        }
     }
 
     public List<AutorDto> listarPorNome(String nome) {

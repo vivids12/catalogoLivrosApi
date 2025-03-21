@@ -1,5 +1,6 @@
 package com.catalogo.api.catalogoLivros.repository;
 
+import com.catalogo.api.catalogoLivros.dto.autor.AutorDto;
 import com.catalogo.api.catalogoLivros.model.Autor;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -21,7 +22,9 @@ public interface AutorRepository extends JpaRepository<Autor, Long> {
 
     List<Autor> findByStatusTrue();
 
-    List<Autor> findByIdAndStatusTrue(Long id);
+    // List<Autor> findByIdAndStatusTrue(Long id);
 
     List<Autor> findByNomeAndStatusTrue(String nome);
+
+    AutorDto getReferenceByIdAndStatusTrue(Long id);
 }
