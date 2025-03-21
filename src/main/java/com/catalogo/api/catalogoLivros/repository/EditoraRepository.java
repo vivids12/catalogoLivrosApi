@@ -16,7 +16,7 @@ public interface EditoraRepository extends JpaRepository<Editora, Long> {
     @Query("SELECT e.id FROM Editora e WHERE e.nome = :nome")
     List<Long> getIdsByNome(@Param("nome") String editora);
 
-    List<Editora> findAllAndStatusTrue();
+    List<Editora> findByStatusTrue();
 
     List<Editora> findByIdAndStatusTrue(Long id);
 

@@ -4,10 +4,12 @@ import com.catalogo.api.catalogoLivros.dto.AtualizarLivroDto;
 import com.catalogo.api.catalogoLivros.dto.CadastroLivroDto;
 import com.catalogo.api.catalogoLivros.dto.LivroDto;
 import com.catalogo.api.catalogoLivros.exception.ValidacaoException;
+import com.catalogo.api.catalogoLivros.model.Editora;
 import com.catalogo.api.catalogoLivros.model.Genero;
 import com.catalogo.api.catalogoLivros.repository.EditoraRepository;
 import com.catalogo.api.catalogoLivros.repository.LivroRepository;
 import com.catalogo.api.catalogoLivros.service.LivroService;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -120,18 +122,30 @@ public class LivroController {
     @PutMapping
     @Transactional
     public ResponseEntity<String> atualizar(@RequestBody @Valid AtualizarLivroDto dto) {
-        var livro = repository.getReferenceById(dto.id());
-        var editora = editoraRepository.getReferenceById(dto.idEditora());
-        livro.atualizarInformacoes(livro, editora);
+        try {
+            var livro = repository.getReferenceById(dto.id());
+            Editora editora = null;
+            if (dto.idEditora() != null) {
+                editora = editoraRepository.getReferenceById(dto.idEditora());
+            }
 
-        return ResponseEntity.ok("Livro atualizado com sucesso!");
+            livro.atualizarInformacoes(dto, editora);
+
+            return ResponseEntity.ok("Livro atualizado com sucesso!");
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.badRequest().body("Não existe um livro com esse id!");
+        }
     }
 
     @DeleteMapping("/{id}")
     @Transactional
     public ResponseEntity<String> excluir(@PathVariable Long id) {
-        var livro = repository.getById(id);
-        livro.excluir();
-        return ResponseEntity.noContent().build();
+        try{
+            var livro = repository.getById(id);
+            livro.excluir();
+            return ResponseEntity.noContent().build();
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.badRequest().body("Não existe uma livro com esse id!");
+        }
     }
 }

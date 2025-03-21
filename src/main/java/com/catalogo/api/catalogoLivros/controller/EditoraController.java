@@ -5,6 +5,7 @@ import com.catalogo.api.catalogoLivros.exception.ValidacaoException;
 import com.catalogo.api.catalogoLivros.repository.EditoraRepository;
 import com.catalogo.api.catalogoLivros.service.EditoraService;
 import com.catalogo.api.catalogoLivros.service.LivroService;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -70,18 +71,27 @@ public class EditoraController {
     @PutMapping
     @Transactional
     public ResponseEntity<String> atualizar(@RequestBody @Valid AtualizarEditoraDto dto) {
-        var editora = repository.getReferenceById(dto.id());
-        editora.atualizarInformacoes(editora);
+        try {
+            var editora = repository.getReferenceById(dto.id());
+            editora.atualizarInformacoes(dto);
 
-        return ResponseEntity.ok("Livro atualizado com sucesso!");
+            return ResponseEntity.ok("Editora atualizada com sucesso!");
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.badRequest().body("Não existe uma editora com esse id!");
+        }
     }
 
     @DeleteMapping("/{id}")
     @Transactional
-    public ResponseEntity<String> atualizar(@PathVariable Long id) {
-        var editora = repository.getById(id);
-        editora.excluir();
-        return ResponseEntity.noContent().build();
+    public ResponseEntity<String> excluir(@PathVariable Long id) {
+        try {
+            var editora = repository.getById(id);
+            editora.excluir();
+            return ResponseEntity.noContent().build();
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.badRequest().body("Não existe uma editora com esse id!");
+        }
+
     }
 
 }

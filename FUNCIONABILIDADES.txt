@@ -13,14 +13,16 @@ EDITORA
  - cadastro #
  - editora por id #
  - editora por nome #
+ - excluir editora por id #
  - atualizar informações (nome, email, telefone) #
 AUTOR
  - cadastro #
- - autor por id
- - autor por nome
- - atualizar informações (nome, email, telefone)
+ - autor por id #
+ - autor por nome #
+ - excluir autor por id #
+ - atualizar informações (nome, email, telefone) #
 
-VALIDACOES
+VALIDACOES #
 SEGURANÇA
 TESTES
 DOCUMENTAÇÃO

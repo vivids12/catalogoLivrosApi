@@ -1,5 +1,6 @@
 package com.catalogo.api.catalogoLivros.model;
 
+import com.catalogo.api.catalogoLivros.dto.AtualizarEditoraDto;
 import com.catalogo.api.catalogoLivros.dto.CadastroEditoraDto;
 import jakarta.persistence.*;
 
@@ -46,9 +47,13 @@ public class Editora {
         return cnpj;
     }
 
-    public void atualizarInformacoes(Editora editora) {
-        this.nome = editora.nome;
-        this.email = editora.email;
+    public void atualizarInformacoes(AtualizarEditoraDto dto) {
+        if(dto.nome() != null) {
+            this.nome = dto.nome();
+        }
+        if(dto.email() != null) {
+            this.email = dto.email();
+        }
     }
 
     public void excluir() {

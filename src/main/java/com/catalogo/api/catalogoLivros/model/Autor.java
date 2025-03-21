@@ -1,5 +1,6 @@
 package com.catalogo.api.catalogoLivros.model;
 
+import com.catalogo.api.catalogoLivros.dto.AtualizarAutorDto;
 import com.catalogo.api.catalogoLivros.dto.CadastroAutorDto;
 import jakarta.persistence.*;
 
@@ -17,6 +18,8 @@ public class Autor {
     private String telefone;
 
     private String cpf;
+
+    private Boolean status;
 
     public Autor() {}
 
@@ -39,11 +42,31 @@ public class Autor {
         return email;
     }
 
+    public Boolean getStatus() {
+        return status;
+    }
+
     public String getTelefone() {
         return telefone;
     }
 
     public String getCpf() {
         return cpf;
+    }
+
+    public void atualizarInformacoes(AtualizarAutorDto dto) {
+        if(dto.nome() != null) {
+            this.nome = dto.nome();
+        }
+        if(dto.email() != null) {
+            this.email = dto.email();
+        }
+        if(dto.telefone() != null) {
+            this.telefone = dto.telefone();
+        }
+    }
+
+    public void excluir() {
+        this.status = false;
     }
 }

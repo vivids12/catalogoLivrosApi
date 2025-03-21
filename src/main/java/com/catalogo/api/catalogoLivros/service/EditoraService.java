@@ -27,7 +27,7 @@ public class EditoraService {
     }
 
     public List<EditoraDto> listarEditoras() {
-        List<EditoraDto> editoras = repository.findAllAndStatusTrue()
+        List<EditoraDto> editoras = repository.findByStatusTrue()
                 .stream()
                 .map(EditoraDto::new)
                 .toList();

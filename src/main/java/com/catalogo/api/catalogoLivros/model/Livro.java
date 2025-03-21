@@ -1,5 +1,6 @@
 package com.catalogo.api.catalogoLivros.model;
 
+import com.catalogo.api.catalogoLivros.dto.AtualizarLivroDto;
 import com.catalogo.api.catalogoLivros.dto.CadastroLivroDto;
 import jakarta.persistence.*;
 
@@ -61,8 +62,12 @@ public class Livro {
         this.status = false;
     }
 
-    public void atualizarInformacoes(Livro livro, Editora editora) {
-        this.titulo = livro.getTitulo();
-        this.editora = editora;
+    public void atualizarInformacoes(AtualizarLivroDto livro, Editora editora) {
+        if(livro.titulo() != null) {
+            this.titulo = livro.titulo();
+        }
+        if (editora != null) {
+            this.editora = editora;
+        }
     }
 }
