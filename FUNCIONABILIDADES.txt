@@ -5,16 +5,20 @@ LIVRO
    - não precisar ser o nome exato
  - listar por genero #
  - listar por editora #
- - livro por id
- - livro por nome
+ - livro por id #
+ - livro por nome #
+ - excluir livro por id #
+ - atualizar informações (titulo, editora) #
 EDITORA
  - cadastro #
  - editora por id
  - editora por nome
+ - atualizar informações (nome, email, telefone)
 AUTOR
  - cadastro #
  - autor por id
  - autor por nome
+ - atualizar informações (nome, email, telefone)
 
 VALIDACOES
 SEGURANÇA

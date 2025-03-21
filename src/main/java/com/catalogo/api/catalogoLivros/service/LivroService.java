@@ -43,7 +43,7 @@ public class LivroService {
 
     public List<LivroDto> listarPorGenero(Genero genero) {
         List<LivroDto> livros = repository
-                .findByGenero(genero)
+                .findByGeneroAndStatusTrue(genero)
                 .stream()
                 .map(LivroDto::new)
                 .toList();
@@ -59,7 +59,7 @@ public class LivroService {
         List<LivroDto> livros = new ArrayList<>();
 
         for (Long id : idAutor) {
-            List<LivroDto> livrosPorAutor = repository.findByAutorId(id)
+            List<LivroDto> livrosPorAutor = repository.findByAutorIdAndStatusTrue(id)
                     .stream()
                     .map(LivroDto::new)
                     .toList();
@@ -78,12 +78,39 @@ public class LivroService {
         }
         List<LivroDto> livros = new ArrayList<>();
         for (Long id : idEditora) {
-            List<LivroDto> livrosPorEditora = repository.findByEditoraId(id)
+            List<LivroDto> livrosPorEditora = repository.findByEditoraIdAndStatusTrue(id)
                     .stream()
                     .map(LivroDto::new)
                     .toList();
             livros.addAll(livrosPorEditora);
         }
+        return livros;
+    }
+
+    public List<LivroDto> listarPorTitulo(String titulo) {
+        List<LivroDto> livros = repository.findByTituloAndStatusTrue(titulo)
+                .stream()
+                .map(LivroDto::new)
+                .toList();
+
+        return livros;
+    }
+
+    public List<LivroDto> listarPorId(Long id) {
+        List<LivroDto> livros = repository.findById(id)
+                .stream()
+                .map(LivroDto::new)
+                .toList();
+
+        return livros;
+    }
+
+    public List<LivroDto> listarLivros() {
+        List<LivroDto> livros = repository.findByStatusTrue()
+                .stream()
+                .map(LivroDto::new)
+                .toList();
+
         return livros;
     }
 }

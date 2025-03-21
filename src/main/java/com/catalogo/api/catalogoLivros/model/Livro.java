@@ -21,6 +21,8 @@ public class Livro {
     @Enumerated(EnumType.STRING)
     private Genero genero;
 
+    private Boolean status;
+
     public Livro() {}
 
     public Livro(CadastroLivroDto dto, Autor autor, Editora editora) {
@@ -28,6 +30,7 @@ public class Livro {
         this.autor = autor;
         this.editora = editora;
         this.genero = dto.genero();
+        this.status = true;
     }
 
     public Long getId() {
@@ -48,5 +51,18 @@ public class Livro {
 
     public Genero getGenero() {
         return genero;
+    }
+
+    public Boolean getStatus() {
+        return status;
+    }
+
+    public void excluir() {
+        this.status = false;
+    }
+
+    public void atualizarInformacoes(Livro livro, Editora editora) {
+        this.titulo = livro.getTitulo();
+        this.editora = editora;
     }
 }

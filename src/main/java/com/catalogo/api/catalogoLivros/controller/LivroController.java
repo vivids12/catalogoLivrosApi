@@ -1,9 +1,12 @@
 package com.catalogo.api.catalogoLivros.controller;
 
+import com.catalogo.api.catalogoLivros.dto.AtualizarLivroDto;
 import com.catalogo.api.catalogoLivros.dto.CadastroLivroDto;
 import com.catalogo.api.catalogoLivros.dto.LivroDto;
 import com.catalogo.api.catalogoLivros.exception.ValidacaoException;
 import com.catalogo.api.catalogoLivros.model.Genero;
+import com.catalogo.api.catalogoLivros.repository.EditoraRepository;
+import com.catalogo.api.catalogoLivros.repository.LivroRepository;
 import com.catalogo.api.catalogoLivros.service.LivroService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +22,12 @@ import java.util.List;
 public class LivroController {
     @Autowired
     private LivroService service;
+
+    @Autowired
+    private LivroRepository repository;
+
+    @Autowired
+    private EditoraRepository editoraRepository;
 
     @PostMapping
     @Transactional
@@ -54,7 +63,6 @@ public class LivroController {
         if(livros == null){
             return ResponseEntity.badRequest().body("Autor inválido");
         }
-
         if(livros.isEmpty()){
             return ResponseEntity.notFound().build();
         }
@@ -74,5 +82,56 @@ public class LivroController {
         }
 
         return ResponseEntity.ok(livros);
+    }
+
+    @GetMapping("/titulo/{titulo}")
+    public ResponseEntity<?> listarPorNome(@PathVariable String titulo){
+        List<LivroDto> livros = service.listarPorTitulo(titulo.toLowerCase());
+
+        if(livros.isEmpty()){
+            return ResponseEntity.notFound().build();
+        }
+
+        return ResponseEntity.ok(livros);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<?> listarPorNome(@PathVariable Long id){
+        List<LivroDto> livros = service.listarPorId(id);
+
+        if(livros.isEmpty()){
+            return ResponseEntity.notFound().build();
+        }
+
+        return ResponseEntity.ok(livros);
+    }
+
+    @GetMapping
+    public ResponseEntity<?> listarLivros(){
+        List<LivroDto> livros = service.listarLivros();
+
+        if(livros.isEmpty()){
+            return ResponseEntity.notFound().build();
+        }
+
+        return ResponseEntity.ok(livros);
+    }
+
+    @PutMapping
+    @Transactional
+    public ResponseEntity<String> atualizar(@RequestBody @Valid AtualizarLivroDto dto) {
+        var livro = repository.getReferenceById(dto.id());
+        var editora = editoraRepository.getReferenceById(dto.idEditora());
+        livro.atualizarInformacoes(livro, editora);
+
+        return ResponseEntity.ok("Livro atualizado com sucesso!");
+    }
+
+    @DeleteMapping("/{id}")
+    @Transactional
+    public ResponseEntity<String> atualizar(@PathVariable Long id) {
+        var livro = repository.getById(id);
+        livro.excluir();
+        return ResponseEntity.noContent().build();
     }
 }
