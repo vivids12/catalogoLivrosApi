@@ -20,5 +20,5 @@ public interface LivroRepository extends JpaRepository<Livro, Long> {
 
     List<Livro> findByStatusTrue();
 
-    LivroDto getReferenceByIdAndStatusTrue(Long id);
+    Livro getReferenceByIdAndStatusTrue(Long id);
 }

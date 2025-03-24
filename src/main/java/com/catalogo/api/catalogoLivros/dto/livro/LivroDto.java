@@ -7,8 +7,8 @@ public record LivroDto (
         Long id,
         String titulo,
         Genero genero,
-        String nomeAutor,
-        String nomeEditora){
+        String idAutor,
+        String idEditora){
     public LivroDto(Livro livro) {
         this(
             livro.getId(),

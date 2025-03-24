@@ -2,6 +2,7 @@ package com.catalogo.api.catalogoLivros.service;
 
 import com.catalogo.api.catalogoLivros.dto.livro.CadastroLivroDto;
 import com.catalogo.api.catalogoLivros.dto.livro.LivroDto;
+import com.catalogo.api.catalogoLivros.dto.livro.LivroMapper;
 import com.catalogo.api.catalogoLivros.exception.ValidacaoException;
 import com.catalogo.api.catalogoLivros.model.Autor;
 import com.catalogo.api.catalogoLivros.model.Editora;
@@ -31,6 +32,8 @@ public class LivroService {
 
     @Autowired
     private List<ValidacoesCadastroLivro> validacoes;
+    @Autowired
+    private LivroMapper livroMapper;
 
     public void cadastrar(CadastroLivroDto dto){
         Autor autor = autorRepository.getReferenceById(dto.idAutor());
@@ -98,8 +101,9 @@ public class LivroService {
 
     public LivroDto listarPorId(Long id) {
         try {
-            LivroDto livro = repository.getReferenceByIdAndStatusTrue(id);
-            return livro;
+            Livro livro = repository.getReferenceByIdAndStatusTrue(id);
+            LivroDto dto = livroMapper.toDto(livro);
+            return dto;
         } catch (ValidacaoException e){
             throw new ValidacaoException("Id inválido!");
         }

@@ -3,10 +3,12 @@ package com.catalogo.api.catalogoLivros.model;
 import com.catalogo.api.catalogoLivros.dto.autor.AtualizarAutorDto;
 import com.catalogo.api.catalogoLivros.dto.autor.CadastroAutorDto;
 import jakarta.persistence.*;
+import lombok.Setter;
 
 @Entity
 @Table
 public class Autor {
+    @Setter
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -74,4 +76,5 @@ public class Autor {
     public void excluir() {
         this.status = false;
     }
+
 }
