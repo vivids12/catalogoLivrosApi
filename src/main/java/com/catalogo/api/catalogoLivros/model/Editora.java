@@ -59,4 +59,8 @@ public class Editora {
     public void excluir() {
         this.status = false;
     }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 }

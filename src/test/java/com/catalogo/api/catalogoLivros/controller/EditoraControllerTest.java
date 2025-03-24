@@ -1,11 +1,11 @@
 package com.catalogo.api.catalogoLivros.controller;
 
-import com.catalogo.api.catalogoLivros.dto.autor.AutorDto;
+import com.catalogo.api.catalogoLivros.dto.editora.EditoraDto;
 import com.catalogo.api.catalogoLivros.dto.livro.LivroMapper;
 import com.catalogo.api.catalogoLivros.exception.ValidacaoException;
-import com.catalogo.api.catalogoLivros.model.Autor;
-import com.catalogo.api.catalogoLivros.repository.AutorRepository;
-import com.catalogo.api.catalogoLivros.service.AutorService;
+import com.catalogo.api.catalogoLivros.model.Editora;
+import com.catalogo.api.catalogoLivros.repository.EditoraRepository;
+import com.catalogo.api.catalogoLivros.service.EditoraService;
 import jakarta.persistence.EntityNotFoundException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -27,27 +27,29 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 
 @SpringBootTest
 @AutoConfigureMockMvc
-class AutorControllerTest {
+class EditoraControllerTest {
 
     @Autowired
     private MockMvc mvc;
 
     @MockBean
-    private AutorService service;
+    private EditoraService service;
 
     @MockBean
     private LivroMapper livroMapper;
 
     @Mock
-    private AutorRepository repository;
+    private EditoraRepository repository;
+
+
 
     @Test
     @DisplayName("Não deveria permitir cadastro com erros")
-    void deveriaDeveolverCodigo400() throws Exception {
+    void deveriaDevolverCodigo400() throws Exception {
         String json = "{}";
 
         var response = mvc.perform(
-                post("/autor")
+                post("/editora")
                         .content(json)
                         .contentType(MediaType.APPLICATION_JSON)
         ).andReturn().getResponse();
@@ -57,18 +59,17 @@ class AutorControllerTest {
 
     @Test
     @DisplayName("Deveria permitir cadastro completo sem erros")
-    void deveriaDeveolverCodigo200() throws Exception {
+    void deveriaDevolverCodigo200() throws Exception {
         String json = """
                 {
                 "nome": "Silvia Santos",
                 "email": "silvia.santos@gmail.com",
-                "cpf": "12300012300",
-                "telefone": "(11)9000-0000"
+                "cnpj": "56.461.000/0002-93"
                 }
                 """;
 
         var response = mvc.perform(
-                post("/autor")
+                post("/editora")
                         .content(json)
                         .contentType(MediaType.APPLICATION_JSON)
         ).andReturn().getResponse();
@@ -81,10 +82,10 @@ class AutorControllerTest {
     void deveriaDevolverCodigo200IdCorreto() throws Exception {
         Long id = 1L;
         when(service.listarPorId(id))
-                .thenReturn(new AutorDto(1l, "Nome", "email", "11", "11"));
+                .thenReturn(new EditoraDto(1l, "Nome", "11"));
 
         MockHttpServletResponse response = mvc.perform(
-                get("/autor/{id}", id)
+                get("/editora/{id}", id)
         ).andReturn().getResponse();
 
         assertEquals(200, response.getStatus());
@@ -97,37 +98,37 @@ class AutorControllerTest {
         when(service.listarPorId(id))
                 .thenThrow(new ValidacaoException("Id inválido!"));
         MockHttpServletResponse response = mvc.perform(
-                get("/autor/{id}", id)
+                get("/editora/{id}", id)
         ).andReturn().getResponse();
 
         assertEquals(400, response.getStatus());
     }
 
     @Test
-    @DisplayName("Deveria listar todos os autores")
-    void deveriaDevolverCodigo200ListarAutores() throws Exception {
-        List<AutorDto> lista = new ArrayList<>();
-        lista.add(new AutorDto (1l, "Nome", "email", "11", "11"));
-        lista.add(new AutorDto (2l, "Nome", "email", "11", "11"));
-        when(service.listarAutores())
+    @DisplayName("Deveria listar todos os editoras")
+    void deveriaDevolverCodigo200ListarEditoras() throws Exception {
+        List<EditoraDto> lista = new ArrayList<>();
+        lista.add(new EditoraDto (1l, "Nome", "11"));
+        lista.add(new EditoraDto (2l, "Nome", "11"));
+        when(service.listarEditoras())
                 .thenReturn(lista);
 
         MockHttpServletResponse response = mvc.perform(
-                get("/autor")
+                get("/editora")
         ).andReturn().getResponse();
 
         assertEquals(200, response.getStatus());
     }
 
     @Test
-    @DisplayName("Deveria retornar vazio quando não tem autores cadastrados")
-    void deveriaDevolverCodigo404ListarAutores() throws Exception {
-        List<AutorDto> lista = new ArrayList<>();
-        when(service.listarAutores())
+    @DisplayName("Deveria retornar vazio quando não tem editoras cadastradas")
+    void deveriaDevolverCodigo404ListarEditoras() throws Exception {
+        List<EditoraDto> lista = new ArrayList<>();
+        when(service.listarEditoras())
                 .thenReturn(lista);
 
         MockHttpServletResponse response = mvc.perform(
-                get("/autor")
+                get("/editora")
         ).andReturn().getResponse();
 
         assertEquals(404, response.getStatus());
@@ -136,16 +137,16 @@ class AutorControllerTest {
     @Test
     @DisplayName("Deveria listar por nome, quando nome correto")
     void deveriaDevolverCodigo200NomeCorreto() throws Exception {
-        List<AutorDto> lista = new ArrayList<>();
-        lista.add(new AutorDto (1l, "Nome", "email", "11", "11"));
-        lista.add(new AutorDto (2l, "Nome", "email", "11", "11"));
+        List<EditoraDto> lista = new ArrayList<>();
+        lista.add(new EditoraDto (1l, "nome", "11"));
+        lista.add(new EditoraDto (2l, "nome", "11"));
 
         String nome = "nome";
         when(service.listarPorNome(nome))
                 .thenReturn(lista);
 
         MockHttpServletResponse response = mvc.perform(
-                get("/autor/nome/{nome}", nome)
+                get("/editora/nome/{nome}", nome)
         ).andReturn().getResponse();
 
         assertEquals(200, response.getStatus());
@@ -155,12 +156,12 @@ class AutorControllerTest {
     @DisplayName("Não deveria listar por nome, quando nome incorreto")
     void deveriaDevolverCodigo400NomeIncorreto() throws Exception {
         String nome = "nome";
-        List<AutorDto> lista = new ArrayList<>();
+        List<EditoraDto> lista = new ArrayList<>();
         when(service.listarPorNome(nome))
                 .thenReturn(lista);
 
         MockHttpServletResponse response = mvc.perform(
-                get("/autor/nome/{nome}", nome)
+                get("/editora/nome/{nome}", nome)
         ).andReturn().getResponse();
 
         assertEquals(404, response.getStatus());
@@ -170,7 +171,7 @@ class AutorControllerTest {
     @DisplayName("Deveria atualizar quando informações corretas")
     void deveriaDevolverCodigo200AtualizarInformacoes() throws Exception {
         Long id = 1L;
-        Autor autor = new Autor();
+        Editora editora = new Editora();
 
         String json = """
                 {
@@ -180,10 +181,10 @@ class AutorControllerTest {
                 }
                 """;
 
-        when(repository.getReferenceById(id)).thenReturn(autor);
+        when(repository.getReferenceById(id)).thenReturn(editora);
 
         MockHttpServletResponse response = mvc.perform(
-                put("/autor")
+                put("/editora")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(json)
         ).andReturn().getResponse();
@@ -204,10 +205,10 @@ class AutorControllerTest {
                 }
                 """;
 
-        when(repository.getReferenceById(id)).thenThrow(new EntityNotFoundException("Autor não encontrado!"));
+        when(repository.getReferenceById(id)).thenThrow(new EntityNotFoundException("Editora não encontrada!"));
 
         MockHttpServletResponse response = mvc.perform(
-                put("/autor")
+                put("/editora")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(json)
         ).andReturn().getResponse();
@@ -216,30 +217,30 @@ class AutorControllerTest {
     }
 
     @Test
-    @DisplayName("Deveria excluir autor")
+    @DisplayName("Deveria excluir editora")
     void deveriaDevolverCodigo204ExcluirAutor() throws Exception {
         Long id = 1L;
-        Autor autor = new Autor();
-        autor.setId(id);
+        Editora editora = new Editora();
+        editora.setId(id);
 
-        when(repository.getById(id)).thenReturn(autor);
+        when(repository.getById(id)).thenReturn(editora);
 
         MockHttpServletResponse response = mvc.perform(
-                delete("/autor/{id}", id)
+                delete("/editora/{id}", id)
         ).andReturn().getResponse();
 
         assertEquals(204, response.getStatus());
     }
 
     @Test
-    @DisplayName("Deveria dar erro ao excluir autor com id incorreto")
+    @DisplayName("Deveria dar erro ao excluir editora com id incorreto")
     void deveriaDevolverCodigo400ExcluirAutor() throws Exception {
         Long id = 0L;
 
         when(repository.getById(id)).thenThrow(new EntityNotFoundException("Id incorreto!"));
 
         MockHttpServletResponse response = mvc.perform(
-                delete("/autor/{id}", id)
+                delete("/editora/{id}", id)
         ).andReturn().getResponse();
 
         assertEquals(400, response.getStatus());

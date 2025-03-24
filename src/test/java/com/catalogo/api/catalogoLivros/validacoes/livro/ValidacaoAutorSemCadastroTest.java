@@ -3,8 +3,6 @@ package com.catalogo.api.catalogoLivros.validacoes.livro;
 import com.catalogo.api.catalogoLivros.dto.livro.CadastroLivroDto;
 import com.catalogo.api.catalogoLivros.exception.ValidacaoException;
 import com.catalogo.api.catalogoLivros.repository.AutorRepository;
-import com.catalogo.api.catalogoLivros.repository.EditoraRepository;
-import com.catalogo.api.catalogoLivros.repository.LivroRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
