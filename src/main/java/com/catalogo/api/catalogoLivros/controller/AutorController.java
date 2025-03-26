@@ -4,6 +4,7 @@ import com.catalogo.api.catalogoLivros.dto.autor.AtualizarAutorDto;
 import com.catalogo.api.catalogoLivros.dto.autor.AutorDto;
 import com.catalogo.api.catalogoLivros.dto.autor.CadastroAutorDto;
 import com.catalogo.api.catalogoLivros.exception.ValidacaoException;
+import com.catalogo.api.catalogoLivros.model.Autor;
 import com.catalogo.api.catalogoLivros.repository.AutorRepository;
 import com.catalogo.api.catalogoLivros.service.AutorService;
 import jakarta.persistence.EntityNotFoundException;
@@ -27,10 +28,10 @@ public class AutorController {
     private AutorRepository repository;
 
     @PostMapping
-    public ResponseEntity<String> cadastrar(@Valid @RequestBody CadastroAutorDto dto) {
+    public ResponseEntity<?> cadastrar(@Valid @RequestBody CadastroAutorDto dto) {
         try{
-            service.cadastrar(dto);
-            return ResponseEntity.ok("Autor cadastrado com sucesso!");
+            Autor autorSalvo =  service.cadastrar(dto);
+            return ResponseEntity.ok(autorSalvo);
         } catch (ValidacaoException e){
             return ResponseEntity.badRequest().body(e.getMessage());
         }

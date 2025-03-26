@@ -32,16 +32,20 @@ public class LivroService {
 
     @Autowired
     private List<ValidacoesCadastroLivro> validacoes;
-    @Autowired
+
     private LivroMapper livroMapper;
 
-    public void cadastrar(CadastroLivroDto dto){
+    public Livro cadastrar(CadastroLivroDto dto){
         Autor autor = autorRepository.getReferenceById(dto.idAutor());
         Editora editora = editoraRepository.getReferenceById(dto.idEditora());
 
+        if(autor == null || editora == null){
+            throw new ValidacaoException("Erro ao incluir o livro.");
+        }
+
         validacoes.forEach(validacao -> validacao.validar(dto));
 
-        repository.save(new Livro(dto, autor, editora));
+        return repository.save(new Livro(dto, autor, editora));
     }
 
     public List<LivroDto> listarPorGenero(Genero genero) {
@@ -102,8 +106,7 @@ public class LivroService {
     public LivroDto listarPorId(Long id) {
         try {
             Livro livro = repository.getReferenceByIdAndStatusTrue(id);
-            LivroDto dto = livroMapper.toDto(livro);
-            return dto;
+            return livroMapper.toDto(livro);
         } catch (ValidacaoException e){
             throw new ValidacaoException("Id inválido!");
         }

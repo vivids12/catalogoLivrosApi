@@ -8,7 +8,6 @@ import lombok.Setter;
 @Entity
 @Table
 public class Autor {
-    @Setter
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -30,6 +29,7 @@ public class Autor {
         this.email = dto.email().toLowerCase();
         this.telefone = dto.telefone();
         this.cpf = dto.cpf();
+        this.status = true;
     }
 
     public Autor(Long id, String nome) {
@@ -71,6 +71,10 @@ public class Autor {
         if(dto.telefone() != null) {
             this.telefone = dto.telefone();
         }
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public void excluir() {

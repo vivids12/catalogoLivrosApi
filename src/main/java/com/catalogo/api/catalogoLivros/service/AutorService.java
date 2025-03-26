@@ -19,10 +19,10 @@ public class AutorService {
     @Autowired
     private List<ValidacoesCadastroAutor> validacoes;
 
-    public void cadastrar(CadastroAutorDto dto){
-        validacoes.forEach(validacao -> validacao.validar(dto));
+    public Autor cadastrar(CadastroAutorDto dto){
+        validacoes.forEach(v -> v.validar(dto));
 
-        repository.save(new Autor(dto));
+        return repository.save(new Autor(dto));
     }
 
     public List<AutorDto> listarAutores() {

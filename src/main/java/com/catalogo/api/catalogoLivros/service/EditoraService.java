@@ -19,10 +19,10 @@ public class EditoraService {
     @Autowired
     private List<ValidacoesCadastroEditora> validacoes;
 
-    public void cadastrar(CadastroEditoraDto dto){
+    public Editora cadastrar(CadastroEditoraDto dto){
         validacoes.forEach(validacao -> validacao.validar(dto));
 
-        repository.save(new Editora(dto));
+        return repository.save(new Editora(dto));
     }
 
     public List<EditoraDto> listarEditoras() {

@@ -6,6 +6,7 @@ import com.catalogo.api.catalogoLivros.dto.livro.LivroDto;
 import com.catalogo.api.catalogoLivros.exception.ValidacaoException;
 import com.catalogo.api.catalogoLivros.model.Editora;
 import com.catalogo.api.catalogoLivros.model.Genero;
+import com.catalogo.api.catalogoLivros.model.Livro;
 import com.catalogo.api.catalogoLivros.repository.EditoraRepository;
 import com.catalogo.api.catalogoLivros.repository.LivroRepository;
 import com.catalogo.api.catalogoLivros.service.LivroService;
@@ -35,9 +36,10 @@ public class LivroController {
     @Transactional
     public ResponseEntity<String> cadastrar(@RequestBody @Valid CadastroLivroDto dto) {
         try{
-            service.cadastrar(dto);
-            return ResponseEntity.ok("Livro cadastrado com sucesso!");
-        } catch (ValidacaoException e) {
+            Livro livro = service.cadastrar(dto);
+
+            return ResponseEntity.ok(livro.toString());
+        } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
@@ -99,9 +101,14 @@ public class LivroController {
 
     @GetMapping("/{id}")
     public ResponseEntity<?> listarPorId(@PathVariable Long id){
-        LivroDto livro = service.listarPorId(id);
+        try{
+            LivroDto livro = service.listarPorId(id);
 
-        return ResponseEntity.ok(livro);
+            return ResponseEntity.ok(livro);
+        } catch (ValidacaoException e) {
+            return ResponseEntity.notFound().build();
+        }
+
     }
 
     @GetMapping
