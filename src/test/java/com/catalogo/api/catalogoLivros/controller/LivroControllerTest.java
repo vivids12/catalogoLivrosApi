@@ -1,17 +1,16 @@
 package com.catalogo.api.catalogoLivros.controller;
 
+import com.catalogo.api.catalogoLivros.dto.livro.AtualizarLivroDto;
 import com.catalogo.api.catalogoLivros.dto.livro.CadastroLivroDto;
 import com.catalogo.api.catalogoLivros.dto.livro.LivroDto;
 import com.catalogo.api.catalogoLivros.dto.livro.LivroMapper;
 import com.catalogo.api.catalogoLivros.exception.ValidacaoException;
 import com.catalogo.api.catalogoLivros.model.Autor;
 import com.catalogo.api.catalogoLivros.model.Editora;
-import com.catalogo.api.catalogoLivros.model.Genero;
 import com.catalogo.api.catalogoLivros.model.Livro;
 import com.catalogo.api.catalogoLivros.repository.AutorRepository;
 import com.catalogo.api.catalogoLivros.repository.EditoraRepository;
 import com.catalogo.api.catalogoLivros.repository.LivroRepository;
-import com.catalogo.api.catalogoLivros.service.EditoraService;
 import com.catalogo.api.catalogoLivros.service.LivroService;
 import jakarta.persistence.EntityNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
@@ -25,10 +24,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.ArrayList;
@@ -52,7 +49,6 @@ class LivroControllerTest {
     private AutorRepository autorRepository;
     @Mock
     private EditoraRepository editoraRepository;
-
     @Mock
     private LivroService service;
 
@@ -73,7 +69,7 @@ class LivroControllerTest {
 
         ResponseEntity<String> response = controller.cadastrar(dto);
 
-        assertEquals(200, response.getStatusCodeValue());
+        assertEquals(200, response.getStatusCode().value());
         verify(service, times(1)).cadastrar(any(CadastroLivroDto.class));
     }
 
@@ -85,7 +81,7 @@ class LivroControllerTest {
 
         ResponseEntity<String> response = controller.cadastrar(dto);
 
-        assertEquals(400, response.getStatusCodeValue());
+        assertEquals(400, response.getStatusCode().value());
     }
 
     @Test
@@ -114,7 +110,7 @@ class LivroControllerTest {
 
         ResponseEntity<?> response = controller.cadastrar(dto);
 
-        assertEquals(400, response.getStatusCodeValue());
+        assertEquals(400, response.getStatusCode().value());
     }
 
     @Test
@@ -129,7 +125,7 @@ class LivroControllerTest {
 
         ResponseEntity<?> response = controller.cadastrar(dto);
 
-        assertEquals(400, response.getStatusCodeValue());
+        assertEquals(400, response.getStatusCode().value());
     }
 
 
@@ -142,7 +138,7 @@ class LivroControllerTest {
 
         ResponseEntity<?> response = controller.listarPorId(id);
 
-        assertEquals(200, response.getStatusCodeValue());
+        assertEquals(200, response.getStatusCode().value());
     }
 
     @Test
@@ -154,147 +150,116 @@ class LivroControllerTest {
 
         ResponseEntity<?> response = controller.listarPorId(id);
 
-        assertEquals(404, response.getStatusCodeValue());
+        assertEquals(404, response.getStatusCode().value());
     }
 
-//    @Test
-//    @DisplayName("Deveria listar todos os livros")
-//    void deveriaDevolverCodigo200ListarLivros() throws Exception {
-//        List<LivroDto> lista = new ArrayList<>();
-//        lista.add(new LivroDto (1L, "titulo", Genero.FICCAO, "1", "1"));
-//        lista.add(new LivroDto (1L, "titulo", Genero.FICCAO, "1", "1"));
-//        when(service.listarLivros())
-//                .thenReturn(lista);
-//
-//        MockHttpServletResponse response = mvc.perform(
-//                get("/livro")
-//        ).andReturn().getResponse();
-//
-//        assertEquals(200, response.getStatus());
-//    }
-//
-//    @Test
-//    @DisplayName("Deveria retornar vazio quando não tem livros cadastradas")
-//    void deveriaDevolverCodigo404ListarLivros() throws Exception {
-//        List<LivroDto> lista = new ArrayList<>();
-//        when(service.listarLivros())
-//                .thenReturn(lista);
-//
-//        MockHttpServletResponse response = mvc.perform(
-//                get("/livro")
-//        ).andReturn().getResponse();
-//
-//        assertEquals(404, response.getStatus());
-//    }
-//
-//    @Test
-//    @DisplayName("Deveria listar por nome, quando nome correto")
-//    void deveriaDevolverCodigo200NomeCorreto() throws Exception {
-//        List<LivroDto> lista = new ArrayList<>();
-//        lista.add(new LivroDto (1L, "titulo", Genero.FICCAO, "1", "1"));
-//        lista.add(new LivroDto (1L, "titulo", Genero.FICCAO, "1", "1"));
-//
-//        String titulo = "titulo";
-//        when(service.listarPorTitulo(titulo))
-//                .thenReturn(lista);
-//
-//        MockHttpServletResponse response = mvc.perform(
-//                get("/livro/titulo/{titulo}", titulo)
-//        ).andReturn().getResponse();
-//
-//        assertEquals(200, response.getStatus());
-//    }
-//
-//    @Test
-//    @DisplayName("Não deveria listar por titulo, quando titulo incorreto")
-//    void deveriaDevolverCodigo400NomeIncorreto() throws Exception {
-//        String titulo = "titulo";
-//        List<LivroDto> lista = new ArrayList<>();
-//        when(service.listarPorTitulo(titulo))
-//                .thenReturn(lista);
-//
-//        MockHttpServletResponse response = mvc.perform(
-//                get("/livro/titulo/{titulo}", titulo)
-//        ).andReturn().getResponse();
-//
-//        assertEquals(404, response.getStatus());
-//    }
-//
-//    @Test
-//    @DisplayName("Deveria atualizar quando informações corretas")
-//    void deveriaDevolverCodigo200AtualizarInformacoes() throws Exception {
-//        Long id = 1L;
-//        Livro livro = new Livro();
-//
-//        String json = """
-//                {
-//                    "id": 1,
-//                    "idEditora": 1
-//                }
-//                """;
-//
-//        when(repository.getReferenceById(id)).thenReturn(livro);
-//
-//        MockHttpServletResponse response = mvc.perform(
-//                put("/livro")
-//                .contentType(MediaType.APPLICATION_JSON)
-//                .content(json)
-//        ).andReturn().getResponse();
-//
-//        assertEquals(200, response.getStatus());
-//    }
-//
-//    @Test
-//    @DisplayName("Não deveria atualizar as informações quando id incorreto")
-//    void deveriaDevolverCodigo400NaoAtualizarInformacoes() throws Exception {
-//        Long id = 0L;
-//
-//        String json = """
-//                {
-//                    "id": 0,
-//                    "idEditora": 1
-//                }
-//                """;
-//
-//        when(repository.getReferenceById(id)).thenThrow(new EntityNotFoundException("Livro não encontrada!"));
-//
-//        MockHttpServletResponse response = mvc.perform(
-//                put("/livro")
-//                        .contentType(MediaType.APPLICATION_JSON)
-//                        .content(json)
-//        ).andReturn().getResponse();
-//
-//        assertEquals(400, response.getStatus());
-//    }
-//
-//    @Test
-//    @DisplayName("Deveria excluir livro")
-//    void deveriaDevolverCodigo204ExcluirAutor() throws Exception {
-//        Long id = 1L;
-//        Livro livro = new Livro();
-//        livro.setId(id);
-//
-//        when(repository.getById(id)).thenReturn(livro);
-//
-//        MockHttpServletResponse response = mvc.perform(
-//                delete("/livro/{id}", id)
-//        ).andReturn().getResponse();
-//
-//        assertEquals(204, response.getStatus());
-//    }
-//
-//    @Test
-//    @DisplayName("Deveria dar erro ao excluir livro com id incorreto")
-//    void deveriaDevolverCodigo400ExcluirAutor() throws Exception {
-//        Long id = 0L;
-//
-//        when(repository.getById(id)).thenThrow(new EntityNotFoundException("Id incorreto!"));
-//
-//        MockHttpServletResponse response = mvc.perform(
-//                delete("/livro/{id}", id)
-//        ).andReturn().getResponse();
-//
-//        assertEquals(400, response.getStatus());
-//    }
+    @Test
+    @DisplayName("Deveria listar todos os livros")
+    void deveriaDevolverCodigo200ListarLivros(){
+        List<LivroDto> lista = new ArrayList<>();
+        lista.add(Mockito.mock(LivroDto.class));
+        lista.add(Mockito.mock(LivroDto.class));
+
+        when(service.listarLivros()).thenReturn(lista);
+
+        ResponseEntity<?> response = controller.listarLivros();
+
+        assertEquals(200, response.getStatusCode().value());
+    }
+
+    @Test
+    @DisplayName("Deveria retornar vazio quando não tem livros cadastradas")
+    void deveriaDevolverCodigo404ListarLivros(){
+        List<LivroDto> lista = new ArrayList<>();
+        when(service.listarLivros())
+                .thenReturn(lista);
+
+        ResponseEntity<?> response = controller.listarLivros();
+
+        assertEquals(404, response.getStatusCode().value());
+    }
+
+    @Test
+    @DisplayName("Deveria listar por nome, quando nome correto")
+    void deveriaDevolverCodigo200NomeCorreto(){
+        List<LivroDto> lista = new ArrayList<>();
+        lista.add(Mockito.mock(LivroDto.class));
+        lista.add(Mockito.mock(LivroDto.class));
+
+        String titulo = "titulo";
+        when(service.listarPorTitulo(titulo))
+                .thenReturn(lista);
+
+        ResponseEntity<?> response = controller.listarPorNome(titulo);
+
+        assertEquals(200, response.getStatusCode().value());
+    }
+
+    @Test
+    @DisplayName("Não deveria listar por titulo, quando titulo incorreto")
+    void deveriaDevolverCodigo400NomeIncorreto(){
+        String titulo = "titulo";
+        List<LivroDto> lista = new ArrayList<>();
+        when(service.listarPorTitulo(titulo))
+                .thenReturn(lista);
+
+        ResponseEntity<?> response = controller.listarPorNome(titulo);
+
+        assertEquals(404, response.getStatusCode().value());
+    }
+
+    @Test
+    @DisplayName("Deveria atualizar quando informações corretas")
+    void deveriaDevolverCodigo200AtualizarInformacoes(){
+        AtualizarLivroDto atualizarDto = Mockito.mock(AtualizarLivroDto.class);
+        Livro livro = Mockito.mock(Livro.class);
+        Editora editora = Mockito.mock(Editora.class);
+
+        when(repository.getReferenceById(atualizarDto.id())).thenReturn(livro);
+        when(editoraRepository.getReferenceById(atualizarDto.idEditora())).thenReturn(editora);
+
+        ResponseEntity<?> response = controller.atualizar(atualizarDto);
+
+        assertEquals(200, response.getStatusCode().value());
+    }
+
+    @Test
+    @DisplayName("Não deveria atualizar as informações quando id incorreto")
+    void deveriaDevolverCodigo400NaoAtualizarInformacoes(){
+        Long id = 1L;
+        AtualizarLivroDto atualizarDto = Mockito.mock(AtualizarLivroDto.class);
+        Editora editora = Mockito.mock(Editora.class);
+
+        when(repository.getReferenceById(atualizarDto.id())).thenThrow(new EntityNotFoundException("Livro não encontrada!"));
+        when(editoraRepository.getReferenceById(atualizarDto.idEditora())).thenReturn(editora);
+
+        ResponseEntity<?> response = controller.atualizar(atualizarDto);
+
+        assertEquals(400, response.getStatusCode().value());
+    }
+
+    @Test
+    @DisplayName("Deveria excluir livro")
+    void deveriaDevolverCodigo204ExcluirAutor(){
+        Livro livro = Mockito.mock(Livro.class);
+
+        when(repository.getById(livro.getId())).thenReturn(livro);
+
+        ResponseEntity<?> response = controller.excluir(livro.getId());
+
+        assertEquals(204, response.getStatusCode().value());
+    }
+
+    @Test
+    @DisplayName("Deveria dar erro ao excluir livro com id incorreto")
+    void deveriaDevolverCodigo400ExcluirAutor(){
+        Livro livro = Mockito.mock(Livro.class);
+
+        when(repository.getById(livro.getId())).thenThrow(new EntityNotFoundException("Id incorreto!"));
+
+        ResponseEntity<?> response = controller.excluir(livro.getId());
+
+        assertEquals(400, response.getStatusCode().value());
+    }
 
 }
