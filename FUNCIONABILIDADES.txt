@@ -26,6 +26,6 @@ VALIDACOES #
 SEGURANÇA
 TESTES
  - validacoes #
- - controller
+ - controller #
  - service
 DOCUMENTAÇÃO
