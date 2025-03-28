@@ -37,6 +37,22 @@ public class Autor {
         this.nome = nome;
     }
 
+    public void atualizarInformacoes(AtualizarAutorDto dto) {
+        if(dto.nome() != null) {
+            this.nome = dto.nome();
+        }
+        if(dto.email() != null) {
+            this.email = dto.email();
+        }
+        if(dto.telefone() != null) {
+            this.telefone = dto.telefone();
+        }
+    }
+
+    public void excluir() {
+        this.status = false;
+    }
+
     public Long getId() {
         return id;
     }
@@ -61,24 +77,8 @@ public class Autor {
         return cpf;
     }
 
-    public void atualizarInformacoes(AtualizarAutorDto dto) {
-        if(dto.nome() != null) {
-            this.nome = dto.nome();
-        }
-        if(dto.email() != null) {
-            this.email = dto.email();
-        }
-        if(dto.telefone() != null) {
-            this.telefone = dto.telefone();
-        }
-    }
-
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public void excluir() {
-        this.status = false;
     }
 
 }

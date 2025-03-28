@@ -36,6 +36,19 @@ public class Livro {
         this.status = true;
     }
 
+    public void atualizarInformacoes(AtualizarLivroDto livro, Editora editora) {
+        if(livro.titulo() != null) {
+            this.titulo = livro.titulo();
+        }
+        if (editora != null) {
+            this.editora = editora;
+        }
+    }
+
+    public void excluir() {
+        this.status = false;
+    }
+
     public void setId(Long id) {
         this.id = id;
     }
@@ -62,18 +75,5 @@ public class Livro {
 
     public Boolean getStatus() {
         return status;
-    }
-
-    public void excluir() {
-        this.status = false;
-    }
-
-    public void atualizarInformacoes(AtualizarLivroDto livro, Editora editora) {
-        if(livro.titulo() != null) {
-            this.titulo = livro.titulo();
-        }
-        if (editora != null) {
-            this.editora = editora;
-        }
     }
 }

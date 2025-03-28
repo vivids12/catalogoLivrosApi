@@ -23,9 +23,9 @@ AUTOR
  - atualizar informações (nome, email, telefone) #
 
 VALIDACOES #
-SEGURANÇA
-TESTES
+TESTES #
  - validacoes #
  - controller #
- - service
+ - service #
+SEGURANÇA
 DOCUMENTAÇÃO

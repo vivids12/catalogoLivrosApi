@@ -27,6 +27,19 @@ public class Editora {
         this.cnpj = dto.cnpj();
     }
 
+    public void atualizarInformacoes(AtualizarEditoraDto dto) {
+        if(dto.nome() != null) {
+            this.nome = dto.nome();
+        }
+        if(dto.email() != null) {
+            this.email = dto.email();
+        }
+    }
+
+    public void excluir() {
+        this.status = false;
+    }
+
     public long getId() {
         return id;
     }
@@ -45,19 +58,6 @@ public class Editora {
 
     public String getCnpj() {
         return cnpj;
-    }
-
-    public void atualizarInformacoes(AtualizarEditoraDto dto) {
-        if(dto.nome() != null) {
-            this.nome = dto.nome();
-        }
-        if(dto.email() != null) {
-            this.email = dto.email();
-        }
-    }
-
-    public void excluir() {
-        this.status = false;
     }
 
     public void setId(Long id) {
