@@ -60,7 +60,7 @@ public class AutorController {
 
     @GetMapping("/nome/{nome}")
     public ResponseEntity<?> listarPorNome(@PathVariable String nome){
-        List<AutorDto> autores = service.listarPorNome(nome.toLowerCase());
+        List<AutorDto> autores = service.listarPorNome(nome);
 
         if(autores.isEmpty()){
             return ResponseEntity.notFound().build();

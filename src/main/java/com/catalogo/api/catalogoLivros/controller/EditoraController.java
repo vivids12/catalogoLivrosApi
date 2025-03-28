@@ -60,7 +60,7 @@ public class EditoraController {
 
     @GetMapping("/nome/{nome}")
     public ResponseEntity<?> listarPorNome(@PathVariable String nome){
-        List<EditoraDto> editoras = service.listarPorNome(nome.toLowerCase());
+        List<EditoraDto> editoras = service.listarPorNome(nome);
 
         if(editoras.isEmpty()){
             return ResponseEntity.notFound().build();

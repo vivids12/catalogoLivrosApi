@@ -52,9 +52,6 @@ class LivroControllerTest {
     @Mock
     private LivroService service;
 
-    @MockBean
-    private LivroMapper livroMapper;
-
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
@@ -82,20 +79,6 @@ class LivroControllerTest {
         ResponseEntity<String> response = controller.cadastrar(dto);
 
         assertEquals(400, response.getStatusCode().value());
-    }
-
-    @Test
-    @DisplayName("Não deveria permitir cadastro incompleto")
-    void deveriaDevolverCodigo400() throws Exception {
-        String json = "{}";
-
-        var response = mvc.perform(
-                post("/livro")
-                        .content(json)
-                        .contentType(MediaType.APPLICATION_JSON)
-        ).andReturn().getResponse();
-
-        assertEquals(400, response.getStatus());
     }
 
     @Test

@@ -1,0 +1,1 @@
+INSERT INTO usuario(login, senha) VALUES ('ana.souza', '123456');
