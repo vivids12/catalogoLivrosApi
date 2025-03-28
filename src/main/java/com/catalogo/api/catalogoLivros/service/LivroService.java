@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @Service
 public class LivroService {
@@ -40,7 +41,7 @@ public class LivroService {
         Editora editora = editoraRepository.getReferenceById(dto.idEditora());
 
         if(autor == null || editora == null){
-            throw new ValidacaoException("Erro ao incluir o livro.");
+            throw new ValidacaoException("É necessário ter autor e editora cadastrados.");
         }
 
         validacoes.forEach(validacao -> validacao.validar(dto));
@@ -58,7 +59,9 @@ public class LivroService {
     }
 
     public List<LivroDto> listarPorAutor(String autor) {
+
         List<Long> idAutor = autorRepository.getIdsByNome(autor);
+
         if(idAutor.isEmpty()){
             return null;
         }
@@ -105,8 +108,12 @@ public class LivroService {
 
     public LivroDto listarPorId(Long id) {
         try {
-            Livro livro = repository.getReferenceByIdAndStatusTrue(id);
-            return livroMapper.toDto(livro);
+            List<LivroDto> livro = repository.findByIdAndStatusTrue(id)
+                    .stream()
+                    .map(LivroDto::new)
+                    .toList();
+            return livro.getFirst();
+                    // livroMapper.toDto(livro);
         } catch (ValidacaoException e){
             throw new ValidacaoException("Id inválido!");
         }

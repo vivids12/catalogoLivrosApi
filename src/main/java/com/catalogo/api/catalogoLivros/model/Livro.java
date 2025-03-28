@@ -36,6 +36,10 @@ public class Livro {
         this.status = true;
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     public Long getId() {
         return id;
     }
@@ -72,5 +76,4 @@ public class Livro {
             this.editora = editora;
         }
     }
-
 }

@@ -1,5 +1,6 @@
 package com.catalogo.api.catalogoLivros.controller;
 
+import com.catalogo.api.catalogoLivros.dto.editora.AtualizarEditoraDto;
 import com.catalogo.api.catalogoLivros.dto.editora.EditoraDto;
 import com.catalogo.api.catalogoLivros.dto.livro.LivroMapper;
 import com.catalogo.api.catalogoLivros.exception.ValidacaoException;
@@ -9,12 +10,15 @@ import com.catalogo.api.catalogoLivros.service.EditoraService;
 import jakarta.persistence.EntityNotFoundException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -28,6 +32,9 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 @SpringBootTest
 @AutoConfigureMockMvc
 class EditoraControllerTest {
+
+    @InjectMocks
+    private EditoraController controller;
 
     @Autowired
     private MockMvc mvc;
@@ -168,26 +175,15 @@ class EditoraControllerTest {
     @Test
     @DisplayName("Deveria atualizar quando informações corretas")
     void deveriaDevolverCodigo200AtualizarInformacoes() throws Exception {
-        Long id = 1L;
-        Editora editora = new Editora();
-
-        String json = """
-                {
-                    "id": 1,
-                    "nome": "Silvia Santos",
-                    "email": "silvia.santos@gmail.com"
-                }
-                """;
+        Editora editora = Mockito.mock(Editora.class);
+        AtualizarEditoraDto dto = Mockito.mock(AtualizarEditoraDto.class);
+        Long id = dto.id();
 
         when(repository.getReferenceById(id)).thenReturn(editora);
 
-        MockHttpServletResponse response = mvc.perform(
-                put("/editora")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(json)
-        ).andReturn().getResponse();
+        ResponseEntity<?> response = controller.atualizar(dto);
 
-        assertEquals(200, response.getStatus());
+        assertEquals(200, response.getStatusCode().value());
     }
 
     @Test
@@ -218,16 +214,13 @@ class EditoraControllerTest {
     @DisplayName("Deveria excluir editora")
     void deveriaDevolverCodigo204ExcluirAutor() throws Exception {
         Long id = 1L;
-        Editora editora = new Editora();
-        editora.setId(id);
+        Editora editora = Mockito.mock(Editora.class);
 
-        when(repository.getById(id)).thenReturn(editora);
+        when(repository.getById(editora.getId())).thenReturn(editora);
 
-        MockHttpServletResponse response = mvc.perform(
-                delete("/editora/{id}", id)
-        ).andReturn().getResponse();
+        ResponseEntity<?> response = controller.excluir(editora.getId());
 
-        assertEquals(204, response.getStatus());
+        assertEquals(204, response.getStatusCode().value());
     }
 
     @Test
