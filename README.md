@@ -23,7 +23,7 @@ A API implementa autenticação via **JWT (JSON Web Token)**. Para acessar os en
 ## Banco de Dados H2
 A API utiliza um banco de dados H2 em memória. Para acessar a interface web do H2:
 - **URL**: [http://localhost:8080/h2-console](http://localhost:8080/h2-console)
-- **JDBC URL**: `jdbc:h2:file:catalogoLivros`
+- **JDBC URL**: `jdbc:h2:file:./BD/catalogoLivros`
 - **Usuário**: `admin`
 - **Senha**: `123`
 
