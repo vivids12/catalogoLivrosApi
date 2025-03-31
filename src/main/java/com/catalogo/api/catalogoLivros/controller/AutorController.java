@@ -7,6 +7,7 @@ import com.catalogo.api.catalogoLivros.exception.ValidacaoException;
 import com.catalogo.api.catalogoLivros.model.Autor;
 import com.catalogo.api.catalogoLivros.repository.AutorRepository;
 import com.catalogo.api.catalogoLivros.service.AutorService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,8 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/autor")
+@RestController
+@SecurityRequirement(name = "bearer-key")
 public class AutorController {
 
     @Autowired

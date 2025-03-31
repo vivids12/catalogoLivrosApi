@@ -10,6 +10,7 @@ import com.catalogo.api.catalogoLivros.model.Livro;
 import com.catalogo.api.catalogoLivros.repository.EditoraRepository;
 import com.catalogo.api.catalogoLivros.repository.LivroRepository;
 import com.catalogo.api.catalogoLivros.service.LivroService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,8 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/livro")
+@RestController
+@SecurityRequirement(name = "bearer-key")
 public class LivroController {
     @Autowired
     private LivroService service;
