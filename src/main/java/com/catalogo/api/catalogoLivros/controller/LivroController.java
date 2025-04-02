@@ -10,6 +10,7 @@ import com.catalogo.api.catalogoLivros.model.Livro;
 import com.catalogo.api.catalogoLivros.repository.EditoraRepository;
 import com.catalogo.api.catalogoLivros.repository.LivroRepository;
 import com.catalogo.api.catalogoLivros.service.LivroService;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
@@ -35,6 +36,7 @@ public class LivroController {
     @Autowired
     private EditoraRepository editoraRepository;
 
+    @Operation(summary = "Cadastrar um livro", description = "Cadastra um livro e retorna as informações cadastradas")
     @PostMapping
     @Transactional
     public ResponseEntity<String> cadastrar(@RequestBody @Valid CadastroLivroDto dto) {
@@ -47,6 +49,7 @@ public class LivroController {
         }
     }
 
+    @Operation(summary = "Listar por gênero", description = "Retorna uma lista de livros com o gênero informado")
     @GetMapping("/genero/{genero}")
     public ResponseEntity<?> listarPorGenero(@PathVariable String genero){
        try{
@@ -63,6 +66,7 @@ public class LivroController {
        }
     }
 
+    @Operation(summary = "Listar por autor", description = "Retorna uma lista de livros do mesmo autor")
     @GetMapping("/autor/{autor}")
     public ResponseEntity<?> listarPorAutor(@PathVariable String autor){
         List<LivroDto> livros = service.listarPorAutor(autor.toLowerCase());
@@ -77,6 +81,7 @@ public class LivroController {
         return ResponseEntity.ok(livros);
     }
 
+    @Operation(summary = "Listar por editora", description = "Retorna uma lista de livros da mesma editora")
     @GetMapping("/editora/{editora}")
     public ResponseEntity<?> listarPorEditora(@PathVariable String editora){
         List<LivroDto> livros = service.listarPorEditora(editora.toLowerCase());
@@ -91,6 +96,7 @@ public class LivroController {
         return ResponseEntity.ok(livros);
     }
 
+    @Operation(summary = "Listar por titulo", description = "Retorna uma lista de livros com o mesmo título")
     @GetMapping("/titulo/{titulo}")
     public ResponseEntity<?> listarPorNome(@PathVariable String titulo){
         List<LivroDto> livros = service.listarPorTitulo(titulo.toLowerCase());
@@ -102,6 +108,7 @@ public class LivroController {
         return ResponseEntity.ok(livros);
     }
 
+    @Operation(summary = "Livro por ID", description = "Retorna um livro com o ID informado")
     @GetMapping("/{id}")
     public ResponseEntity<?> listarPorId(@PathVariable Long id){
         try{
@@ -114,6 +121,7 @@ public class LivroController {
 
     }
 
+    @Operation(summary = "Listar livros", description = "Lista todos os livros cadastrados")
     @GetMapping
     public ResponseEntity<?> listarLivros(){
         List<LivroDto> livros = service.listarLivros();
@@ -125,6 +133,7 @@ public class LivroController {
         return ResponseEntity.ok(livros);
     }
 
+    @Operation(summary = "Atualizar livro", description = "Atualiza um livro com os dados informados")
     @PutMapping
     @Transactional
     public ResponseEntity<String> atualizar(@RequestBody @Valid AtualizarLivroDto dto) {
@@ -143,6 +152,7 @@ public class LivroController {
         }
     }
 
+    @Operation(summary = "Excluir livro", description = "Exclui um livro com o ID informado")
     @DeleteMapping("/{id}")
     @Transactional
     public ResponseEntity<String> excluir(@PathVariable Long id) {

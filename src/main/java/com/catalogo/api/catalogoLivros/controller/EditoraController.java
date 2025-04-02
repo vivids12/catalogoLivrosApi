@@ -7,6 +7,7 @@ import com.catalogo.api.catalogoLivros.exception.ValidacaoException;
 import com.catalogo.api.catalogoLivros.model.Editora;
 import com.catalogo.api.catalogoLivros.repository.EditoraRepository;
 import com.catalogo.api.catalogoLivros.service.EditoraService;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
@@ -29,6 +30,7 @@ public class EditoraController {
     @Autowired
     private EditoraRepository repository;
 
+    @Operation(summary = "Cadastrar uma editora", description = "Cadastra uma editora e retorna as informações cadastradas")
     @PostMapping
     @Transactional
     public ResponseEntity<?> cadastrar(@RequestBody @Valid CadastroEditoraDto dto) {
@@ -40,6 +42,7 @@ public class EditoraController {
         }
     }
 
+    @Operation(summary = "Listar editoras", description = "Lista todas as editoras cadastradas")
     @GetMapping
     public ResponseEntity<?> listarEditoras() {
         List<EditoraDto> editoras = service.listarEditoras();
@@ -51,6 +54,7 @@ public class EditoraController {
         return ResponseEntity.ok(editoras);
     }
 
+    @Operation(summary = "Editora por ID", description = "Retorna a editora com o ID informado")
     @GetMapping("/{id}")
     public ResponseEntity<?> listarPorId(@PathVariable Long id){
         try {
@@ -61,6 +65,7 @@ public class EditoraController {
         }
     }
 
+    @Operation(summary = "Listar editora por nome", description = "Retorna uma lista de editoras com o nome informado")
     @GetMapping("/nome/{nome}")
     public ResponseEntity<?> listarPorNome(@PathVariable String nome){
         List<EditoraDto> editoras = service.listarPorNome(nome);
@@ -72,6 +77,7 @@ public class EditoraController {
         return ResponseEntity.ok(editoras);
     }
 
+    @Operation(summary = "Atualizar uma editora", description = "Atualiza uma editora com os dados informados")
     @PutMapping
     @Transactional
     public ResponseEntity<String> atualizar(@RequestBody @Valid AtualizarEditoraDto dto) {
@@ -85,6 +91,7 @@ public class EditoraController {
         }
     }
 
+    @Operation(summary = "Excluir uma editora", description = "Exclui uma editora com o ID informado")
     @DeleteMapping("/{id}")
     @Transactional
     public ResponseEntity<String> excluir(@PathVariable Long id) {

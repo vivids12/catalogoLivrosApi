@@ -7,6 +7,7 @@ import com.catalogo.api.catalogoLivros.exception.ValidacaoException;
 import com.catalogo.api.catalogoLivros.model.Autor;
 import com.catalogo.api.catalogoLivros.repository.AutorRepository;
 import com.catalogo.api.catalogoLivros.service.AutorService;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
@@ -30,7 +31,9 @@ public class AutorController {
     @Autowired
     private AutorRepository repository;
 
+    @Operation(summary = "Cadastrar um autor", description = "Cadastra um autor e as informações cadastradas")
     @PostMapping
+    @Transactional
     public ResponseEntity<?> cadastrar(@Valid @RequestBody CadastroAutorDto dto) {
         try{
             Autor autorSalvo =  service.cadastrar(dto);
@@ -40,6 +43,7 @@ public class AutorController {
         }
     }
 
+    @Operation(summary = "Listar todos os autores", description = "Retorna todos os autores cadastrados")
     @GetMapping
     public ResponseEntity<?> listarAutores() {
         List<AutorDto> autores = service.listarAutores();
@@ -51,6 +55,7 @@ public class AutorController {
         return ResponseEntity.ok(autores);
     }
 
+    @Operation(summary = "Autor por ID", description = "Retorna um autor com o ID informado")
     @GetMapping("/{id}")
     public ResponseEntity<?> listarPorId(@PathVariable Long id){
         try {
@@ -61,6 +66,7 @@ public class AutorController {
         }
     }
 
+    @Operation(summary = "Listar autor por nome", description = "Retorna uma lista de autores com o nome informado")
     @GetMapping("/nome/{nome}")
     public ResponseEntity<?> listarPorNome(@PathVariable String nome){
         List<AutorDto> autores = service.listarPorNome(nome);
@@ -72,6 +78,7 @@ public class AutorController {
         return ResponseEntity.ok(autores);
     }
 
+    @Operation(summary = "Atualizar um autor", description = "Atualiza um autor com os dados informados")
     @PutMapping
     @Transactional
     public ResponseEntity<String> atualizar(@RequestBody @Valid AtualizarAutorDto dto) {
@@ -85,6 +92,7 @@ public class AutorController {
         }
     }
 
+    @Operation(summary = "Excluir um autor", description = "Exclui um autor com o ID informado")
     @DeleteMapping("/{id}")
     @Transactional
     public ResponseEntity<String> excluir(@PathVariable Long id) {
